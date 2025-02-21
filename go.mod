@@ -7,10 +7,10 @@ require (
 	github.com/beevik/etree v1.4.1
 	github.com/bluele/gcache v0.0.2
 	github.com/c-bata/go-prompt v0.2.6
-	github.com/ceph/go-ceph v0.30.0
+	github.com/ceph/go-ceph v0.32.0
 	github.com/cern-eos/go-eosgrpc v0.0.0-20240909164147-ad693be93181
 	github.com/cheggaaa/pb v1.0.29
-	github.com/coreos/go-oidc/v3 v3.11.0
+	github.com/coreos/go-oidc/v3 v3.12.0
 	github.com/creasty/defaults v1.8.0
 	github.com/cs3org/cato v0.0.0-20200828125504-e418fc54dd5e
 	github.com/cs3org/go-cs3apis v0.0.0-20241105092511-3ad35d174fc1
@@ -19,10 +19,10 @@ require (
 	github.com/gdexlab/go-render v1.0.1
 	github.com/glpatcern/go-mime v0.0.0-20221026162842-2a8d71ad17a9
 	github.com/go-chi/chi/v5 v5.2.0
-	github.com/go-ldap/ldap/v3 v3.4.9
+	github.com/go-ldap/ldap/v3 v3.4.10
 	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1
-	github.com/go-playground/validator/v10 v10.23.0
+	github.com/go-playground/validator/v10 v10.25.0
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/golang-jwt/jwt v3.2.2+incompatible
@@ -38,29 +38,29 @@ require (
 	github.com/maxymania/go-system v0.0.0-20170110133659-647cc364bf0b
 	github.com/mileusna/useragent v1.3.5
 	github.com/mitchellh/mapstructure v1.5.0
-	github.com/nats-io/nats.go v1.37.0
+	github.com/nats-io/nats.go v1.39.0
 	github.com/onsi/ginkgo v1.16.5
-	github.com/onsi/gomega v1.30.0
+	github.com/onsi/gomega v1.36.2
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.20.5
 	github.com/rs/cors v1.11.1
 	github.com/rs/zerolog v1.33.0
 	github.com/sethvargo/go-password v0.3.1
 	github.com/stretchr/testify v1.10.0
-	github.com/studio-b12/gowebdav v0.9.0
+	github.com/studio-b12/gowebdav v0.10.0
 	github.com/thanhpk/randstr v1.0.6
 	github.com/tus/tusd v1.13.0
 	github.com/wk8/go-ordered-map v1.0.0
 	go.opencensus.io v0.24.0
-	go.step.sm/crypto v0.55.0
-	golang.org/x/crypto v0.31.0
-	golang.org/x/oauth2 v0.24.0
+	go.step.sm/crypto v0.57.0
+	golang.org/x/crypto v0.32.0
+	golang.org/x/oauth2 v0.26.0
 	golang.org/x/sync v0.10.0
-	golang.org/x/sys v0.28.0
-	golang.org/x/term v0.27.0
+	golang.org/x/sys v0.29.0
+	golang.org/x/term v0.28.0
 	google.golang.org/genproto v0.0.0-20241209162323-e6fa225c2576
-	google.golang.org/grpc v1.69.0
-	google.golang.org/protobuf v1.35.2
+	google.golang.org/grpc v1.69.4
+	google.golang.org/protobuf v1.36.4
 	gotest.tools v2.2.0+incompatible
 )
 
@@ -79,7 +79,7 @@ require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.7 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
 	github.com/go-asn1-ber/asn1-ber v1.5.7 // indirect
 	github.com/go-jose/go-jose/v4 v4.0.4 // indirect
 	github.com/go-kit/kit v0.10.0 // indirect
@@ -121,11 +121,11 @@ require (
 	go.mongodb.org/mongo-driver v1.17.1 // indirect
 	go.opentelemetry.io/otel v1.31.0 // indirect
 	go.opentelemetry.io/otel/trace v1.31.0 // indirect
-	golang.org/x/mod v0.18.0 // indirect
-	golang.org/x/net v0.32.0 // indirect
+	golang.org/x/mod v0.22.0 // indirect
+	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
-	golang.org/x/tools v0.22.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20241209162323-e6fa225c2576 // indirect
+	golang.org/x/tools v0.28.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250102185135-69823020774d // indirect
 	gopkg.in/src-d/go-errors.v1 v1.0.0 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

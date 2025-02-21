@@ -852,18 +852,10 @@ func (c *Client) GetQuota(ctx context.Context, username string, rootAuth eosclie
 	for i := 0; i < len(resp.Quota.Quotanode); i++ {
 		log.Debug().Str("func", "GetQuota").Str("quotanode:", fmt.Sprintf("%d: %#v", i, resp.Quota.Quotanode[i])).Msg("")
 
-		mx := int64(resp.Quota.Quotanode[i].Maxlogicalbytes) - int64(resp.Quota.Quotanode[i].Usedbytes)
-		if mx < 0 {
-			mx = 0
-		}
-		qi.AvailableBytes += uint64(mx)
-		qi.UsedBytes += resp.Quota.Quotanode[i].Usedbytes
+		qi.TotalBytes += max(uint64(resp.Quota.Quotanode[i].Maxlogicalbytes), 0)
+		qi.UsedBytes += resp.Quota.Quotanode[i].Usedlogicalbytes
 
-		mx = int64(resp.Quota.Quotanode[i].Maxfiles) - int64(resp.Quota.Quotanode[i].Usedfiles)
-		if mx < 0 {
-			mx = 0
-		}
-		qi.AvailableInodes += uint64(mx)
+		qi.TotalInodes += max(uint64(resp.Quota.Quotanode[i].Maxfiles), 0)
 		qi.UsedInodes += resp.Quota.Quotanode[i].Usedfiles
 	}
 
@@ -1229,13 +1221,17 @@ func (c *Client) List(ctx context.Context, auth eosclient.Authorization, dpath s
 	fdrq.Role = new(erpc.RoleId)
 
 	uid, gid, err := utils.ExtractUidGid(auth)
-	if err != nil {
-		return nil, errors.Wrap(err, "Failed to extract uid/gid from auth")
-	}
-	fdrq.Role.Uid = uid
-	fdrq.Role.Gid = gid
+	if err == nil {
+		fdrq.Role.Uid = uid
+		fdrq.Role.Gid = gid
 
-	fdrq.Authkey = c.opt.Authkey
+		fdrq.Authkey = c.opt.Authkey
+	} else {
+		if auth.Token == "" {
+			return nil, errors.Wrap(err, "Failed to extract uid/gid from auth")
+		}
+		fdrq.Authkey = auth.Token
+	}
 
 	// Now send the req and see what happens
 	resp, err := c.cl.Find(appctx.ContextGetClean(ctx), fdrq)
@@ -1259,12 +1255,12 @@ func (c *Client) List(ctx context.Context, auth eosclient.Authorization, dpath s
 				break
 			}
 
-			// We got an error while reading items. We log this as an error and we return
-			// the items we have
+			// We got an error while reading items. We return the error to the user and break off the List operation
+			// We do not want to return a partial list, because then a sync client may delete local files that are missing on the server
 			log.Error().Err(err).Str("func", "List").Int("nitems", i).Str("path", dpath).Str("got err from EOS", err.Error()).Msg("")
 			if i > 0 {
 				log.Error().Str("path", dpath).Int("nitems", i).Msg("No more items, dirty exit")
-				return mylst, nil
+				return nil, errors.Wrap(err, "Error listing files")
 			}
 		}
 
@@ -1580,8 +1576,7 @@ func (c *Client) ListVersions(ctx context.Context, auth eosclient.Authorization,
 	versionFolder := getVersionFolder(p)
 	finfos, err := c.List(ctx, auth, versionFolder)
 	if err != nil {
-		// we send back an empty list
-		return []*eosclient.FileInfo{}, nil
+		return []*eosclient.FileInfo{}, err
 	}
 	return finfos, nil
 }
