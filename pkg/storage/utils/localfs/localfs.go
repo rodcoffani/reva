@@ -83,12 +83,17 @@ func (c *Config) ApplyDefaults() {
 	// ensure share folder always starts with slash
 	c.ShareFolder = path.Join("/", c.ShareFolder)
 
-	c.DataDirectory = path.Join(c.Root, "data")
+	if c.DataDirectory == "" {
+		c.DataDirectory = path.Join(c.Root, "data")
+	}
 	c.Uploads = path.Join(c.Root, ".uploads")
 	c.Shadow = path.Join(c.Root, ".shadow")
 
 	c.References = path.Join(c.Shadow, "references")
-	c.RecycleBin = path.Join(c.Shadow, "recycle_bin")
+	if c.RecycleBin == "" {
+		c.RecycleBin = path.Join(c.Shadow, "recycle_bin")
+
+	}
 	c.Versions = path.Join(c.Shadow, "versions")
 }
 
@@ -912,6 +917,8 @@ func (fs *localfs) moveReferences(ctx context.Context, oldName, newName string) 
 }
 
 func (fs *localfs) GetMD(ctx context.Context, ref *provider.Reference, mdKeys []string) (*provider.ResourceInfo, error) {
+	log := appctx.GetLogger(ctx)
+	log.Debug().Msg("Call to localfs GetMD")
 	fn, err := fs.resolve(ctx, ref)
 	if err != nil {
 		return nil, errors.Wrap(err, "localfs: error resolving ref")
@@ -925,6 +932,7 @@ func (fs *localfs) GetMD(ctx context.Context, ref *provider.Reference, mdKeys []
 
 	fn = fs.wrap(ctx, fn)
 	md, err := os.Stat(fn)
+	log.Debug().Str("path", fn).Any("md", md).Err(err).Msg("Stat call in localfs")
 	if err != nil {
 		if os.IsNotExist(err) {
 			return nil, errtypes.NotFound(fn)
@@ -986,7 +994,10 @@ func (fs *localfs) ListFolder(ctx context.Context, ref *provider.Reference, mdKe
 func (fs *localfs) listFolder(ctx context.Context, fn string, mdKeys []string) ([]*provider.ResourceInfo, error) {
 	fn = fs.wrap(ctx, fn)
 
+	log := appctx.GetLogger(ctx)
+
 	entries, err := os.ReadDir(fn)
+	log.Debug().Str("folder", fn).Int("itemCount", len(entries)).Err(err).Msg("Listing folders in localfs")
 	if err != nil {
 		if os.IsNotExist(err) {
 			return nil, errtypes.NotFound(fn)
@@ -998,6 +1009,7 @@ func (fs *localfs) listFolder(ctx context.Context, fn string, mdKeys []string) (
 	for _, entry := range entries {
 		info, err := entry.Info()
 		if err != nil {
+			log.Error().Err(err).Str("entry", entry.Name()).Msg("Failed to retrieve info of file")
 			return nil, err
 		}
 		mds = append(mds, info)
