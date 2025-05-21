@@ -132,17 +132,17 @@ type CapabilitiesAppProvider struct {
 
 // CapabilitiesFiles TODO this is storage specific, not global. What effect do these options have on the clients?
 type CapabilitiesFiles struct {
-	PrivateLinks      ocsBool                      `json:"privateLinks"       mapstructure:"private_links"     xml:"privateLinks"`
-	BigFileChunking   ocsBool                      `json:"bigfilechunking"    xml:"bigfilechunking"`
-	Undelete          ocsBool                      `json:"undelete"           xml:"undelete"`
-	Versioning        ocsBool                      `json:"versioning"         xml:"versioning"`
-	Favorites         ocsBool                      `json:"favorites"          xml:"favorites"`
-	PermanentDeletion ocsBool                      `json:"permanent_deletion" xml:"permanent_deletion"`
-	BlacklistedFiles  []string                     `json:"blacklisted_files"  mapstructure:"blacklisted_files" xml:"blacklisted_files>element"`
-	TusSupport        *CapabilitiesFilesTusSupport `json:"tus_support"        mapstructure:"tus_support"       xml:"tus_support"`
-	Thumbnail         *CapabilitiesFilesThumbnail  `json:"thumbnail"          mapstructure:"thumbnail"         xml:"thumbnail"`
-	Archivers         []*CapabilitiesArchiver      `json:"archivers"          mapstructure:"archivers"         xml:"archivers"`
-	AppProviders      []*CapabilitiesAppProvider   `json:"app_providers"      mapstructure:"app_providers"     xml:"app_providers"`
+	PrivateLinks      ocsBool                      `json:"privateLinks"       mapstructure:"private_links"      xml:"privateLinks"`
+	BigFileChunking   ocsBool                      `json:"bigfilechunking"    mapstructure:"bigfilechunking"    xml:"bigfilechunking"`
+	Undelete          ocsBool                      `json:"undelete"           mapstructure:"undelete"           xml:"undelete"`
+	Versioning        ocsBool                      `json:"versioning"         mapstructure:"versioning"         xml:"versioning"`
+	Favorites         ocsBool                      `json:"favorites"          mapstructure:"favorites"          xml:"favorites"`
+	PermanentDeletion ocsBool                      `json:"permanent_deletion" mapstructure:"permanent_deletion" xml:"permanent_deletion"`
+	BlacklistedFiles  []string                     `json:"blacklisted_files"  mapstructure:"blacklisted_files"  xml:"blacklisted_files>element"`
+	TusSupport        *CapabilitiesFilesTusSupport `json:"tus_support"        mapstructure:"tus_support"        xml:"tus_support"`
+	Thumbnail         *CapabilitiesFilesThumbnail  `json:"thumbnail"          mapstructure:"thumbnail"          xml:"thumbnail"`
+	Archivers         []*CapabilitiesArchiver      `json:"archivers"          mapstructure:"archivers"          xml:"archivers"`
+	AppProviders      []*CapabilitiesAppProvider   `json:"app_providers"      mapstructure:"app_providers"      xml:"app_providers"`
 }
 
 // CapabilitiesDav holds dav endpoint config.
